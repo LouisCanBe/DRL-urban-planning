@@ -37,8 +37,8 @@ eps: 1.0e-5
 value_pred_coef: 0.5
 entropy_coef: 0.01
 clip_epsilon: 0.2
-max_num_iterations: 1000
-num_episodes_per_iteration: 500
+max_num_iterations: 2 #1000
+num_episodes_per_iteration: 50 #500
 max_sequence_length: 50
 num_optim_epoch: 4
 mini_batch_size: 256

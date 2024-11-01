@@ -2,3 +2,9 @@
 *.svg
 .idea
 .ipynb_checkpoints
+
+#trained_models
+
+dhm/
+hlg/
+demo_img/

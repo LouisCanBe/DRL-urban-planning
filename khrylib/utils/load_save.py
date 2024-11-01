@@ -14,7 +14,8 @@ def load_yaml(file_path):
     file_path = get_file_path(file_path)
     files = glob.glob(file_path, recursive=True)
     assert(len(files) == 1)
-    cfg = yaml.safe_load(open(files[0], 'r'))
+    with open(files[0], 'r', encoding='utf-8') as file:
+        cfg = yaml.safe_load(file)
     return cfg
 
 

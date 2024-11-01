@@ -1,45 +1,48 @@
+# Environment Configuration
 # env
-objectives_plan: objectives_dhm
-init_plan: init_plan_dhm
+objectives_plan: objectives_dhm # Specify planning objectives
+init_plan: init_plan_dhm # Specify initial planning
 
+# Reward Configuration
 # reward
 reward_specs:
-  road_network_weight: 0.0
-  life_circle_weight: 4.0
-  greenness_weight: 1.0
+  road_network_weight: 0.0 # Road network weight
+  life_circle_weight: 4.0 # Life circle weight
+  greenness_weight: 1.0 # Greenness weight
 
+# Agent Configuration
 # agent
 agent_specs:
-  batch_stage: false
+  batch_stage: false # Specify whether it is a batch processing stage
 
-# training parameters
-skip_land_use: false
-skip_road: true
-road_ratio: 0.00
-gamma: 1.0
-tau: 0.0
+# Training Parameters
+skip_land_use: false # Specify whether to skip land use planning
+skip_road: true # Specify whether to skip road planning
+road_ratio: 0.00 # Road ratio
+gamma: 1.0 # Discount factor
+tau: 0.0 # Soft update parameter
 state_encoder_specs:
-  state_encoder_hidden_size: [64, 16]
-  gcn_node_dim: 16
-  num_gcn_layers: 2
-  num_edge_fc_layers: 1
-  max_num_nodes: 1000
-  max_num_edges: 3000
-  num_attention_heads: 1
+  state_encoder_hidden_size: [64, 16] # State encoder hidden layer size
+  gcn_node_dim: 16 # Graph convolutional network node dimension
+  num_gcn_layers: 2 # Number of graph convolutional network layers
+  num_edge_fc_layers: 1 # Number of edge feature fully connected layers
+  max_num_nodes: 1000 # Maximum number of nodes
+  max_num_edges: 3000 # Maximum number of edges
+  num_attention_heads: 1 # Number of attention heads
 policy_specs:
-  policy_land_use_head_hidden_size: [32, 1]
-  policy_road_head_hidden_size: [32, 1]
+  policy_land_use_head_hidden_size: [32, 1] # Land use policy head hidden layer size
+  policy_road_head_hidden_size: [32, 1] # Road policy head hidden layer size
 value_specs:
-  value_head_hidden_size: [32, 32, 1]
-lr: 4.0e-4
-weightdecay: 0.0
-eps: 1.0e-5
-value_pred_coef: 0.5
-entropy_coef: 0.01
-clip_epsilon: 0.2
-max_num_iterations: 1000
-num_episodes_per_iteration: 500
-max_sequence_length: 50
-num_optim_epoch: 4
-mini_batch_size: 256
-save_model_interval: 10
+  value_head_hidden_size: [32, 32, 1] # Value head hidden layer size
+lr: 4.0e-4 # Learning rate
+weightdecay: 0.0 # Weight decay
+eps: 1.0e-5 # Epsilon value
+value_pred_coef: 0.5 # Value prediction coefficient
+entropy_coef: 0.01 # Entropy coefficient
+clip_epsilon: 0.2 # Clip epsilon value
+max_num_iterations: 2 # Maximum number of iterations
+num_episodes_per_iteration: 50 # Number of episodes per iteration
+max_sequence_length: 50 # Maximum sequence length
+num_optim_epoch: 4 # Number of optimization epochs
+mini_batch_size: 256 # Mini batch size
+save_model_interval: 10 # Model save interval

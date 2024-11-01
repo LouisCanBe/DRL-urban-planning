@@ -5,8 +5,7 @@ from typing import Text, Dict
 
 class Config:
 
-    def __init__(self, cfg: Text, global_seed: int, tmp: bool, root_dir: Text,
-                 agent: Text = 'rl-sgnn', cfg_dict: Dict = None):
+    def __init__(self, cfg: Text, global_seed: int, tmp: bool, root_dir: Text, agent: Text = 'rl-sgnn', cfg_dict: Dict = None):
         self.id = cfg
         self.seed = global_seed
         if cfg_dict is not None:

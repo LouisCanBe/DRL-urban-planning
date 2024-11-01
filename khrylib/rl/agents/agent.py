@@ -8,7 +8,7 @@ import os
 import platform
 if platform.system() != "Linux":
     from multiprocessing import set_start_method
-    set_start_method("fork")
+    set_start_method("spawn") #spawn is the only supported start method on Windows
 os.environ["OMP_NUM_THREADS"] = "1"
 
 
@@ -79,22 +79,23 @@ class Agent:
         to_test(*self.sample_modules)
         with to_cpu(*self.sample_modules):
             with torch.no_grad():
-                thread_num_samples = int(math.floor(num_samples / nthreads))
-                queue = multiprocessing.Queue()
-                memories = [None] * nthreads
-                loggers = [None] * nthreads
-                for i in range(nthreads-1):
-                    worker_args = (i+1, queue, thread_num_samples, mean_action)
-                    worker = multiprocessing.Process(target=self.sample_worker, args=worker_args)
-                    worker.start()
-                memories[0], loggers[0] = self.sample_worker(0, None, thread_num_samples, mean_action)
+                # thread_num_samples = int(math.floor(num_samples / nthreads))
+                # queue = multiprocessing.Queue()
+                # memories = [None] * nthreads
+                # loggers = [None] * nthreads
+                # for i in range(nthreads-1):
+                #     worker_args = (i+1, queue, thread_num_samples, mean_action)
+                #     worker = multiprocessing.Process(target=self.sample_worker, args=worker_args)
+                #     worker.start()
+                # memories[0], loggers[0] = self.sample_worker(0, None, thread_num_samples, mean_action)
 
-                for i in range(nthreads - 1):
-                    pid, worker_memory, worker_logger = queue.get()
-                    memories[pid] = worker_memory
-                    loggers[pid] = worker_logger
-                traj_batch = self.traj_cls(memories)
-                logger = self.logger_cls.merge(loggers, **self.logger_kwargs)
+                # for i in range(nthreads - 1):
+                #     pid, worker_memory, worker_logger = queue.get()
+                #     memories[pid] = worker_memory
+                #     loggers[pid] = worker_logger
+                memory, logger = self.sample_worker(0, None, num_samples, mean_action)
+                traj_batch = self.traj_cls([memory])
+                logger = self.logger_cls.merge([logger], **self.logger_kwargs)
 
         logger.sample_time = time.time() - t_start
         return traj_batch, logger

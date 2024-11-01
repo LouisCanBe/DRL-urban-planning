@@ -102,7 +102,9 @@ class SGNNStateEncoder(nn.Module):
         count_edge = torch.zeros_like(h_nodes)
         count = torch.broadcast_to(edge_mask.unsqueeze(-1), h_edges.shape).float()
 
-        idx = indices.unsqueeze(-1).expand(-1, -1, num_latents)
+        # 确保 indices 的数据类型为 int64
+        idx = indices.unsqueeze(-1).expand(-1, -1, num_latents).to(torch.int64)
+        
         h_nodes = h_nodes.scatter_add_(1, idx, h_edges)
         count_edge = count_edge.scatter_add_(1, idx, count)
         return h_nodes, count_edge
@@ -120,6 +122,9 @@ class SGNNStateEncoder(nn.Module):
         Returns:
             h_edges (torch.Tensor): edge embeddings. Shape: (batch, max_num_edges, node_dim).
         """
+        # 确保 edge_index 的数据类型为 int64
+        edge_index = edge_index.to(torch.int64)
+
         h_edges1 = torch.gather(h_nodes, 1, edge_index[:, :, 0].unsqueeze(-1).expand(-1, -1, h_nodes.size(-1)))
         h_edges2 = torch.gather(h_nodes, 1, edge_index[:, :, 1].unsqueeze(-1).expand(-1, -1, h_nodes.size(-1)))
         h_edges_12 = torch.cat([h_edges1, h_edges2], -1)
