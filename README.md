@@ -14,7 +14,7 @@ Full text (PDF) is available at [this link](https://rdcu.be/dlRPZ).
 ## Installation 
 
 ### Environment
-* **Tested OS:** Linux
+* **Tested OS:** Windows 10
 * Python >= 3.8
 * PyTorch >= 1.8.1, <= 1.13.0
 ### Dependencies:
